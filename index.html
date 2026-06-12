@@ -511,7 +511,12 @@
 
   </main>
 
-  <footer class="app-footer"><span data-t="footer_text">Oversikt over vanlige steg – ikke offisiell informasjon fra kommunen · Tønsberg</span></footer>
+  <footer class="app-footer">
+  <span data-t="footer_text">Oversikt over vanlige steg – ikke offisiell informasjon fra kommunen · Tønsberg</span>
+  <div style="margin-top:0.625rem;">
+    <button onclick="restartApp()" id="restartBtn" style="background:none;border:none;color:rgba(255,255,255,0.4);font-size:0.75rem;cursor:pointer;font-family:inherit;text-decoration:underline;text-underline-offset:2px;" data-t="restart_btn">Start på nytt</button>
+  </div>
+</footer>
 </div>
 
 <script>
@@ -569,6 +574,21 @@ function goBack() {
   document.getElementById('appScreen').classList.remove('visible');
   document.getElementById('welcomeScreen').classList.remove('hidden');
   window.scrollTo(0, 0);
+}
+function restartApp(){
+  const t=T[lang];
+  const msg=t.restart_confirm||'Vil du slette alle avkrysninger og starte på nytt?';
+  if(!confirm(msg)) return;
+  clearProgress();
+  document.getElementById('appScreen').classList.remove('visible');
+  document.getElementById('welcomeScreen').classList.remove('hidden');
+  // Reset welcome form
+  pendingLang='no'; pendingArrived=null;
+  document.querySelectorAll('.lang-pick-btn').forEach(b=>b.classList.toggle('selected',b.dataset.lang==='no'));
+  document.querySelectorAll('.arrived-btn').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('startBtn').disabled=true;
+  updateWelcomeTexts('no');
+  window.scrollTo(0,0);
 }
 
 // ── APP STATE ──
@@ -1272,13 +1292,34 @@ function buildAll(){
 }
 
 function saveChecked(){
-  try{ localStorage.setItem('tb_checked', JSON.stringify(checked)); }catch(e){}
+  try{
+    localStorage.setItem('tb_checked', JSON.stringify(checked));
+    localStorage.setItem('tb_lang', lang);
+  }catch(e){}
 }
 function loadChecked(){
   try{
     const s=localStorage.getItem('tb_checked');
     if(s){ const d=JSON.parse(s); Object.assign(checked,d); }
   }catch(e){}
+}
+function hasSavedProgress(){
+  try{
+    const s=localStorage.getItem('tb_checked');
+    if(!s) return false;
+    const d=JSON.parse(s);
+    return Object.values(d).some(v=>v);
+  }catch(e){ return false; }
+}
+function getSavedLang(){
+  try{ return localStorage.getItem('tb_lang')||'no'; }catch(e){ return 'no'; }
+}
+function clearProgress(){
+  try{
+    localStorage.removeItem('tb_checked');
+    localStorage.removeItem('tb_lang');
+  }catch(e){}
+  Object.keys(checked).forEach(k=>delete checked[k]);
 }
 
 function toggleCheck(id){
@@ -1390,6 +1431,27 @@ function setLang(l){
   buildAll();
 }
 
-// Init welcome screen
-updateWelcomeTexts('no');
+// Init: skip welcome if returning user has saved progress
+(function(){
+  if(hasSavedProgress()){
+    const savedLang = getSavedLang();
+    lang = savedLang;
+    loadChecked();
+    document.getElementById('welcomeScreen').classList.add('hidden');
+    document.getElementById('appScreen').classList.add('visible');
+    applyLangToApp(savedLang);
+    buildAll();
+    // Find the first phase that has unchecked items and go there
+    const d=DATA[savedLang];
+    let startPhase=0;
+    for(let p=0;p<d.length;p++){
+      const allDone=d[p].every((_,i)=>!!checked[`p${p}_i${i}`]);
+      if(!allDone){ startPhase=p; break; }
+      if(p===d.length-1) startPhase=p;
+    }
+    switchPhase(startPhase);
+  } else {
+    updateWelcomeTexts('no');
+  }
+})();
 </script></body></html>
