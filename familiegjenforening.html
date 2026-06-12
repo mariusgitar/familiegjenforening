@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hjelp familien din i gang – Tønsberg kommune</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@oslokommune/punkt-css@16.18.0/dist/css/pkt.min.css">
+<style>
+  :root {
+    --tb-navy:       #013952;
+    --tb-green:      #c5daaf;
+    --tb-green-dark: #00714e;
+    --tb-red:        #923c3d;
+    --tb-coral:      #e69d7d;
+    --tb-yellow:     #f1be48;
+    --tb-blue-light: #91cef2;
+    --tb-gray:       #4a4a49;
+    --tb-bg:         #f5f6f3;
+    --tb-white:      #ffffff;
+    --tb-green-pale: #eef4e8;
+  }
+
+  * { font-family: 'Barlow', sans-serif; }
+  body { background: var(--tb-bg); color: var(--tb-navy); }
+
+  /* Header */
+  .app-header { background: var(--tb-navy); color: white; position: sticky; top: 0; z-index: 100; }
+  .app-header__inner { max-width: 720px; margin: 0 auto; padding: 0 1.25rem; height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .app-header__brand { display: flex; align-items: center; gap: 0.75rem; }
+  .app-header__brand-bar { width: 3px; height: 28px; background: var(--tb-green); border-radius: 2px; flex-shrink: 0; }
+  .app-header__brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+  .app-header__brand-text strong { font-size: 13px; font-weight: 600; color: white; }
+  .app-header__brand-text span { font-size: 11px; color: var(--tb-green); opacity: 0.8; }
+
+  .lang-sw { display: flex; gap: 2px; background: rgba(255,255,255,0.08); border-radius: 8px; padding: 3px; flex-shrink: 0; }
+  .lang-sw__btn { padding: 3px 9px; border: none; background: transparent; color: rgba(255,255,255,0.45); font-size: 11px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: all 0.1s; font-family: inherit; letter-spacing: 0.3px; }
+  .lang-sw__btn--active { background: var(--tb-green); color: var(--tb-navy); }
+  .lang-sw__btn:hover:not(.lang-sw__btn--active) { color: white; }
+
+  /* Hero */
+  .app-hero { background: var(--tb-white); border-bottom: 1px solid #dde3d8; padding: 2rem 1.25rem 1.75rem; }
+  .app-hero__inner { max-width: 720px; margin: 0 auto; }
+  .app-hero__eyebrow { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--tb-green-dark); margin-bottom: 0.5rem; }
+  .app-hero h1 { font-size: clamp(1.25rem, 4vw, 1.65rem); font-weight: 700; color: var(--tb-navy); line-height: 1.2; margin: 0 0 0.5rem 0; }
+  .app-hero__desc { font-size: 0.9375rem; color: var(--tb-gray); margin: 0 0 0.75rem 0; max-width: 520px; line-height: 1.6; }
+  .app-hero__tip { font-size: 0.8125rem; color: var(--tb-gray); background: var(--tb-green-pale); border-left: 3px solid var(--tb-green); border-radius: 0 8px 8px 0; padding: 0.625rem 0.875rem; margin: 0 0 1.25rem 0; max-width: 520px; line-height: 1.5; }
+  .app-progress { max-width: 480px; }
+  .app-progress__bar { height: 5px; background: #dde3d8; border-radius: 100px; overflow: hidden; margin-bottom: 0.375rem; }
+  .app-progress__fill { height: 100%; background: var(--tb-navy); border-radius: 100px; transition: width 0.35s ease; }
+  .app-progress__label { font-size: 0.8125rem; color: var(--tb-gray); margin: 0; }
+  .app-progress__label strong { color: var(--tb-navy); }
+
+  /* Main */
+  .app-main { max-width: 720px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+
+  /* Phase tabs */
+  .phase-tabs { display: flex; flex-wrap: wrap; gap: 0.375rem; padding: 0.2rem 0 0.4rem; margin-bottom: 1.5rem; }
+  .phase-tab { flex-shrink: 0; padding: 0.4375rem 0.875rem; border-radius: 8px; border: 1px solid #c8d4c2; background: var(--tb-white); font-size: 0.8125rem; font-weight: 500; color: var(--tb-gray); cursor: pointer; transition: all 0.12s; white-space: nowrap; font-family: inherit; display: flex; align-items: center; gap: 0.5rem; }
+  .phase-tab:hover { border-color: var(--tb-navy); color: var(--tb-navy); }
+  .phase-tab--active { background: var(--tb-navy); border-color: var(--tb-navy); color: white; font-weight: 600; }
+  .phase-tab__count { font-size: 11px; background: rgba(0,0,0,0.1); border-radius: 100px; padding: 1px 6px; }
+  .phase-tab--active .phase-tab__count { background: rgba(255,255,255,0.18); }
+
+  /* Section heading */
+  .section-heading { margin-bottom: 0.875rem; }
+  .section-heading h2 { font-size: 1.0625rem; font-weight: 700; color: var(--tb-navy); margin: 0 0 0.2rem 0; }
+  .section-heading p { font-size: 0.875rem; color: var(--tb-gray); margin: 0; }
+
+  .phase-section { display: none; }
+  .phase-section--active { display: block; }
+  .checklist { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem; }
+
+  /* Check row */
+  .check-row { background: var(--tb-white); border: 1px solid #d6ddd0; border-radius: 8px; overflow: hidden; transition: border-color 0.12s; }
+  .check-row:hover { border-color: var(--tb-navy); }
+  .check-row--first  { border-left: 3px solid var(--tb-navy); }
+  .check-row--urgent { border-left: 3px solid var(--tb-red); }
+  .check-row--maybe  { border-left: 3px solid var(--tb-blue-light); }
+  .check-row--smart  { border-left: 3px solid var(--tb-green); }
+  .check-row--done { opacity: 0.5; }
+  .check-row--done.check-row--first,
+  .check-row--done.check-row--urgent,
+  .check-row--done.check-row--maybe,
+  .check-row--done.check-row--smart { border-left-color: var(--tb-green-dark); }
+
+  .check-summary { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.8125rem 0.875rem; cursor: pointer; user-select: none; list-style: none; }
+  .check-summary::-webkit-details-marker { display: none; }
+
+  .check-cb { width: 20px; height: 20px; border-radius: 5px; border: 2px solid #b0c0b8; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: white; transition: all 0.12s; }
+  .check-row--done .check-cb { background: var(--tb-navy); border-color: var(--tb-navy); }
+  .check-cb__tick { display: none; }
+  .check-row--done .check-cb__tick { display: block; }
+
+  .check-meta-wrap { flex: 1; min-width: 0; }
+  .check-top-line { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.25rem; }
+  .check-title { font-size: 0.9rem; font-weight: 600; color: var(--tb-navy); line-height: 1.3; }
+
+  /* "Gjelder for" pill — always visible on the row */
+  .check-for { font-size: 11px; color: var(--tb-gray); background: var(--tb-bg); border: 1px solid #d6ddd0; border-radius: 100px; padding: 1px 8px; white-space: nowrap; flex-shrink: 0; }
+
+  .check-meta { font-size: 0.75rem; color: var(--tb-gray); display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+  /* Badges */
+  .tb-badge { font-size: 10px !important; padding: 2px 7px !important; border-radius: 5px !important; font-weight: 600 !important; pointer-events: none; font-family: inherit !important; white-space: nowrap; flex-shrink: 0; }
+  .tb-badge--first  { background: #e8eef2; color: var(--tb-navy); border: 1px solid #b0c8d4; }
+  .tb-badge--urgent { background: #f5e8e8; color: var(--tb-red); border: 1px solid var(--tb-red); }
+  .tb-badge--maybe  { background: #e6f4fb; color: #1d5470; border: 1px solid var(--tb-blue-light); }
+  .tb-badge--smart  { background: var(--tb-green-pale); color: var(--tb-green-dark); border: 1px solid var(--tb-green); }
+  .tb-badge--done   { background: var(--tb-green-pale); color: var(--tb-green-dark); border: 1px solid var(--tb-green-dark); }
+
+  .check-arrow { color: var(--tb-gray); flex-shrink: 0; font-size: 13px; margin-top: 2px; transition: transform 0.18s; }
+  details[open] .check-arrow { transform: rotate(180deg); }
+
+  /* Detail panel */
+  .check-details { border-top: 1px solid #e8ede4; padding: 0.875rem 0.875rem 0.875rem 3rem; font-size: 0.8125rem; color: var(--tb-gray); line-height: 1.6; }
+  .check-details dl { display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 0.75rem; margin-bottom: 0.625rem; font-size: 0.75rem; }
+  .check-details dt { font-weight: 600; white-space: nowrap; color: var(--tb-navy); }
+  .check-details dd { color: var(--tb-gray); }
+  .check-details p { margin: 0 0 0.5rem 0; }
+  .check-details p:last-child { margin: 0; }
+
+  /* "Dette sier du" call box */
+  .check-call { background: var(--tb-green-pale); border: 1px solid var(--tb-green); border-radius: 8px; padding: 0.625rem 0.75rem; margin-top: 0.625rem; font-size: 0.75rem; line-height: 1.55; }
+  .check-call strong { display: block; color: var(--tb-green-dark); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem; }
+
+  .check-link { display: inline-flex; align-items: center; gap: 4px; margin-top: 0.5rem; font-size: 0.75rem; font-weight: 600; color: var(--tb-navy); text-decoration: underline; text-underline-offset: 2px; }
+  .check-link:hover { color: var(--tb-green-dark); }
+
+  /* Messagebox */
+  .app-callout { background: var(--tb-green-pale); border: 1px solid var(--tb-green); border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 0.875rem; font-size: 0.875rem; color: var(--tb-navy); line-height: 1.5; }
+
+  .app-footer { background: var(--tb-navy); color: rgba(255,255,255,0.4); text-align: center; padding: 1.25rem; font-size: 0.75rem; }
+
+  @media (max-width: 480px) { .check-details { padding-left: 0.875rem; } }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="app-header__inner">
+    <div class="app-header__brand">
+      <div class="app-header__brand-bar"></div>
+      <div class="app-header__brand-text">
+        <strong data-t="app_title">Hjelp familien din i gang</strong>
+        <span>Tønsberg kommune</span>
+      </div>
+    </div>
+    <div class="lang-sw">
+      <button class="lang-sw__btn lang-sw__btn--active" onclick="setLang('no')">NO</button>
+      <button class="lang-sw__btn" onclick="setLang('en')">EN</button>
+      <button class="lang-sw__btn" onclick="setLang('ar')" style="font-family:sans-serif">AR</button>
+    </div>
+  </div>
+</header>
+
+<div class="app-hero">
+  <div class="app-hero__inner">
+    <div class="app-hero__eyebrow" data-t="hero_eyebrow">Tønsberg kommune</div>
+    <h1 data-t="hero_title">Familien din skal flytte til Tønsberg</h1>
+    <p class="app-hero__desc" data-t="hero_desc">Her finner du de viktigste tingene dere må gjøre før familien kommer og de første månedene i Norge. Du trenger ikke gjøre alt på én gang.</p>
+    <p class="app-hero__tip" data-t="hero_tip">Noen punkter gjelder bare familier med barn, eller folk fra bestemte land. Trykk på et punkt for å lese mer om det gjelder dere.</p>
+    <div class="app-progress">
+      <div class="app-progress__bar"><div class="app-progress__fill" id="progressFill" style="width:0%"></div></div>
+      <p class="app-progress__label"><strong id="progressText">0 av 22 fullført</strong></p>
+    </div>
+  </div>
+</div>
+
+<main class="app-main">
+  <nav class="phase-tabs" id="phaseTabs">
+    <button class="phase-tab phase-tab--active" data-phase="0" onclick="switchPhase(0)"><span data-t="phase0_tab">Før ankomst</span><span class="phase-tab__count" id="count0">0/5</span></button>
+    <button class="phase-tab" data-phase="1" onclick="switchPhase(1)"><span data-t="phase1_tab">Uke 1</span><span class="phase-tab__count" id="count1">0/3</span></button>
+    <button class="phase-tab" data-phase="2" onclick="switchPhase(2)"><span data-t="phase2_tab">Uke 1–4</span><span class="phase-tab__count" id="count2">0/4</span></button>
+    <button class="phase-tab" data-phase="3" onclick="switchPhase(3)"><span data-t="phase3_tab">Barn og skole</span><span class="phase-tab__count" id="count3">0/4</span></button>
+    <button class="phase-tab" data-phase="4" onclick="switchPhase(4)"><span data-t="phase4_tab">Penger og ID</span><span class="phase-tab__count" id="count4">0/3</span></button>
+    <button class="phase-tab" data-phase="5" onclick="switchPhase(5)"><span data-t="phase5_tab">Norsk og jobb</span><span class="phase-tab__count" id="count5">0/3</span></button>
+  </nav>
+
+  <div class="phase-section phase-section--active" id="phase-0">
+    <div class="section-heading"><h2 data-t="phase0_title">Før familien reiser</h2><p data-t="phase0_sub">Dette kan du gjøre hjemmefra, mens familien er på vei.</p></div>
+    <div class="app-callout" data-t="phase0_callout">Du som er henvørende kan hjelpe familien med disse stegene. Start så tidlig som mulig – noen ting tar tid å ordne.</div>
+    <div class="checklist" id="list0"></div>
+  </div>
+  <div class="phase-section" id="phase-1">
+    <div class="section-heading"><h2 data-t="phase1_title">De første 7 dagene</h2><p data-t="phase1_sub">Det viktigste som bør gjøres rett etter at familien har kommet.</p></div>
+    <div class="checklist" id="list1"></div>
+  </div>
+  <div class="phase-section" id="phase-2">
+    <div class="section-heading"><h2 data-t="phase2_title">De første 4 ukene</h2><p data-t="phase2_sub">Helse og fastlege på plass.</p></div>
+    <div class="checklist" id="list2"></div>
+  </div>
+  <div class="phase-section" id="phase-3">
+    <div class="section-heading"><h2 data-t="phase3_title">Barn og skole</h2><p data-t="phase3_sub">Gjelder familier med barn under 16 år.</p></div>
+    <div class="checklist" id="list3"></div>
+  </div>
+  <div class="phase-section" id="phase-4">
+    <div class="section-heading"><h2 data-t="phase4_title">Penger og ID på nett</h2><p data-t="phase4_sub">For å bruke norske offentlige nettsider og få støtte fra NAV.</p></div>
+    <div class="checklist" id="list4"></div>
+  </div>
+  <div class="phase-section" id="phase-5">
+    <div class="section-heading"><h2 data-t="phase5_title">Norsk og arbeid</h2><p data-t="phase5_sub">Neste steg etter at de praktiske tingene er på plass.</p></div>
+    <div class="checklist" id="list5"></div>
+  </div>
+</main>
+
+<footer class="app-footer"><span data-t="footer_text">Prototype – ikke en offisiell tjeneste ennå · Tønsberg kommune</span></footer>
+
+<script>
+const T={
+no:{
+  app_title:"Hjelp familien din i gang",
+  hero_eyebrow:"Tønsberg kommune",
+  hero_title:"Familien din skal flytte til Tønsberg",
+  hero_desc:"Her finner du de viktigste tingene dere må gjøre før familien kommer og de første månedene i Norge. Du trenger ikke gjøre alt på én gang.",
+  hero_tip:"Noen punkter gjelder bare familier med barn, eller folk fra bestemte land. Trykk på et punkt for å lese mer om det gjelder dere.",
+  phase0_tab:"Før ankomst",phase1_tab:"Uke 1",phase2_tab:"Uke 1–4",phase3_tab:"Barn og skole",phase4_tab:"Penger og ID",phase5_tab:"Norsk og jobb",
+  phase0_title:"Før familien reiser",phase0_sub:"Dette kan du gjøre hjemmefra, mens familien er på vei.",
+  phase0_callout:"Du som er henvørende kan hjelpe familien med disse stegene. Start så tidlig som mulig – noen ting tar tid å ordne.",
+  phase1_title:"De første 7 dagene",phase1_sub:"Det viktigste som bør gjøres rett etter at familien har kommet.",
+  phase2_title:"De første 4 ukene",phase2_sub:"Helse og fastlege på plass.",
+  phase3_title:"Barn og skole",phase3_sub:"Gjelder familier med barn under 16 år.",
+  phase4_title:"Penger og ID på nett",phase4_sub:"For å bruke norske offentlige nettsider og få støtte fra NAV.",
+  phase5_title:"Norsk og arbeid",phase5_sub:"Neste steg etter at de praktiske tingene er på plass.",
+  footer_text:"Prototype – ikke en offisiell tjeneste ennå · Tønsberg kommune",
+  badge_first:"Gjør dette først",badge_urgent:"Viktig – ikke vent",badge_maybe:"Gjelder kanskje dere",badge_smart:"Lurt å gjøre tidlig",badge_done:"Ferdig",
+  for_lbl:"Gjelder",why_lbl:"Hvorfor",need_lbl:"Ha klart",call_lbl:"Dette kan du si",open_link:"Gå til nettside",
+  progress_fn:(n,t)=>`${n} av ${t} fullført`
+},
+en:{
+  app_title:"Help your family get started",
+  hero_eyebrow:"Tønsberg municipality",
+  hero_title:"Your family is moving to Tønsberg",
+  hero_desc:"Here you will find the most important things to do before the family arrives and during the first months in Norway. You don't need to do everything at once.",
+  hero_tip:"Some points only apply to families with children, or people from certain countries. Tap a point to read more about whether it applies to you.",
+  phase0_tab:"Before arrival",phase1_tab:"Week 1",phase2_tab:"Weeks 1–4",phase3_tab:"Children",phase4_tab:"Money & ID",phase5_tab:"Norwegian & work",
+  phase0_title:"Before the family travels",phase0_sub:"Things you can do from home while the family is on the way.",
+  phase0_callout:"As the person who applied for family reunification, you can help the family with these steps. Start as early as possible – some things take time.",
+  phase1_title:"The first 7 days",phase1_sub:"The most important things to do right after the family arrives.",
+  phase2_title:"The first 4 weeks",phase2_sub:"Getting healthcare and a GP in place.",
+  phase3_title:"Children and school",phase3_sub:"For families with children under 16.",
+  phase4_title:"Money and online ID",phase4_sub:"To use Norwegian public websites and receive support from NAV.",
+  phase5_title:"Norwegian and work",phase5_sub:"Next steps once the practical things are in place.",
+  footer_text:"Prototype – not an official service yet · Tønsberg municipality",
+  badge_first:"Do this first",badge_urgent:"Important – don't wait",badge_maybe:"May apply to you",badge_smart:"Good to do early",badge_done:"Done",
+  for_lbl:"Who",why_lbl:"Why",need_lbl:"Have ready",call_lbl:"What to say",open_link:"Go to website",
+  progress_fn:(n,t)=>`${n} of ${t} completed`
+},
+ar:{
+  app_title:"ساعد عائلتك على البداية",
+  hero_eyebrow:"بلدية تونسبرغ",
+  hero_title:"عائلتك ستنتقل إلى تونسبرغ",
+  hero_desc:"ستجد هنا أهم الأمور التي يجب القيام بها قبل وصول العائلة وخلال الأشهر الأولى في النرويج. لا تحتاج إلى فعل كل شيء دفعة واحدة.",
+  hero_tip:"بعض النقاط تنطبق فقط على العائلات التي لديها أطفال أو القادمين من بلدان معينة. اضغط على نقطة لقراءة المزيد.",
+  phase0_tab:"قبل الوصول",phase1_tab:"الأسبوع 1",phase2_tab:"أسابيع 1-4",phase3_tab:"الأطفال",phase4_tab:"المال والهوية",phase5_tab:"النرويجية والعمل",
+  phase0_title:"قبل سفر العائلة",phase0_sub:"أشياء يمكنك فعلها من المنزل بينما العائلة في الطريق.",
+  phase0_callout:"بوصفك مقدم الطلب، يمكنك مساعدة العائلة في هذه الخطوات. ابدأ في أقرب وقت ممكن.",
+  phase1_title:"الأسبوع الأول",phase1_sub:"أهم الأمور بعد وصول العائلة مباشرة.",
+  phase2_title:"الأسابيع الأربعة الأولى",phase2_sub:"الحصول على الرعاية الصحية والطبيب.",
+  phase3_title:"الأطفال والمدرسة",phase3_sub:"للعائلات التي لديها أطفال دون 16 عاماً.",
+  phase4_title:"المال والهوية الرقمية",phase4_sub:"لاستخدام المواقع الحكومية النرويجية والحصول على الدعم.",
+  phase5_title:"اللغة النرويجية والعمل",phase5_sub:"الخطوات التالية بعد ترتيب الأمور العملية.",
+  footer_text:"نموذج أولي – ليس خدمة رسمية بعد · بلدية تونسبرغ",
+  badge_first:"افعل هذا أولاً",badge_urgent:"مهم – لا تنتظر",badge_maybe:"قد ينطبق عليكم",badge_smart:"من الجيد الفعل مبكراً",badge_done:"تم",
+  for_lbl:"ينطبق على",why_lbl:"لماذا",need_lbl:"احضر معك",call_lbl:"ماذا تقول",open_link:"اذهب إلى الموقع",
+  progress_fn:(n,t)=>`${n} من ${t} مكتمل`
+}};
+
+const DATA={
+no:[[
+  {type:"first",title:"Les brevet fra UDI",for:"Alle",
+   when:"Så snart du mottar det",need:"Brevet fra UDI",
+   why:"Brevet sier når familien kan reise, og hvor lenge tillatelsen varer. Det kan også stå frister du må overholde.",
+   desc:"Skriv ned: når familien kan reise, hvor lenge tillatelsen gjelder, og når dere tidligst må søke om fornying.",
+   call:"Si til familien: «Dere kan reise til Norge fra [dato]. Ta med alle papirer som står i brevet.»",
+   link:"https://www.udi.no"},
+  {type:"first",title:"Bestill time hos politiet",for:"Alle",
+   when:"Før familien reiser, om mulig",need:"Pass, brev fra UDI",
+   why:"Familien må møte på politistasjonen for å få oppholdskort. Et oppholdskort viser at de har lov til å bo i Norge.",
+   desc:"Bestill tidlig – det kan være ventetid. Velg politistasjonen nærmest der familien skal bo.",
+   call:"",
+   link:"https://www.politiet.no/tjenester/pass-og-id/id-for-utlendinger/"},
+  {type:"first",title:"Sørg for at familien har et sted å bo",for:"Alle",
+   when:"Før familien kommer",need:"Leieavtale eller annen dokumentasjon på bolig",
+   why:"Uten adresse er det vanskelig å melde seg i folkeregisteret, velge fastlege og søke plass i skole og barnehage.",
+   desc:"Sjekk at boligen er stor nok for alle. Adressen er viktig for post, registrering og kommunale tjenester.",
+   call:"",link:""},
+  {type:"first",title:"Samle viktige papirer",for:"Alle",
+   when:"Før familien pakker",need:"Pass, brev fra UDI, fødselsattester, vaksinasjonskort, skolepapirer, resepter",
+   why:"Papirer kan være vanskelige å hente etterpå.",
+   desc:"Ta med originaler der det er mulig. Fotografer alle dokumenter og lagre bildene trygt – for eksempel i skyen.",
+   call:"",link:""},
+  {type:"smart",title:"Søk barnehageplass tidlig",for:"Barn 1–5 år",
+   when:"Allerede nå – ikke vent",need:"Barnets fødselsdato og boligadresse",
+   why:"Det er begrenset med plasser og faste søknadsfrister. Jo tidligere du søker, jo bedre sjanse.",
+   desc:"Barn som bor i Tønsberg og har oppholdstillatelse kan ha rett til barnehageplass.",
+   call:"",link:"https://www.tonsberg.kommune.no/barnehage"}
+],[
+  {type:"first",title:"Møt opp hos politiet",for:"Alle",
+   when:"Uke 1 – timen du bestilte",need:"Pass, brev fra UDI og alle papirer som sto i brevet",
+   why:"Familien trenger oppholdskort for å bruke de fleste offentlige tjenester i Norge.",
+   desc:"Alle i familien må møte opp personlig. Barn under 18 år må ha en forelder med seg.",
+   call:"",link:""},
+  {type:"first",title:"Registrer at familien har flyttet til Norge",for:"Alle",
+   when:"Så raskt som mulig etter ankomst",need:"Pass, brev fra UDI, adresse",
+   why:"Når dette er gjort, får personen et norsk nummer (fødselsnummer eller D-nummer). Dette nummeret trengs for lege, bank, skole og de fleste offentlige tjenester.",
+   desc:"Dette gjøres hos Skatteetaten. Det er gratis.",
+   call:"",link:"https://www.skatteetaten.no/person/folkeregister/flytte/til-norge/"},
+  {type:"urgent",title:"Tuberkulosetest",for:"Noen land – sjekk om det gjelder dere",
+   when:"Innen 4 uker etter ankomst",need:"Pass",
+   why:"Noen som kommer til Norge fra land med mye tuberkulose, må ta en test. Dette er et krav i loven.",
+   desc:"Er du usikker på om dette gjelder familien din? Ring helsestasjonen og spør.",
+   call:"Ring helsestasjonen i Tønsberg og si: «Familien min har kommet til Norge. Må de ta tuberkulosetest?» Ha med fødselsdato og hvilket land de kom fra.",
+   link:"https://www.fhi.no/nettpub/smittevernveilederen/tbc/"}
+],[
+  {type:"first",title:"Velg fastlege",for:"Alle – etter at norsk nummer er mottatt",
+   when:"Etter registrering hos Skatteetaten",need:"Norsk fødselsnummer eller D-nummer",
+   why:"Fastlegen er legen du kontakter når du er syk, trenger resept eller vil bli henvist til spesialist.",
+   desc:"Logg inn på helsenorge.no for å velge lege. Velg en som bor nær deg.",
+   call:"",link:"https://www.helsenorge.no/velg-fastlege/"},
+  {type:"first",title:"Ring helsestasjonen",for:"Barn 0–5 år",
+   when:"Første eller andre uke",need:"Barnets helsepapirer og vaksinasjonskort",
+   why:"Helsestasjonen følger opp barnets helse, utvikling og vaksiner. Det er gratis og frivillig, men anbefales sterkt.",
+   desc:"Ring helsestasjonen i kommunen din. De setter opp tid for deg.",
+   call:"Ring helsestasjonen og si: «Jeg har et lite barn som nettopp har kommet til Norge. Vi vil gjerne ha en time.»",
+   link:"https://www.tonsberg.kommune.no/helsestasjon"},
+  {type:"maybe",title:"Sjekk om barnet mangler vaksiner",for:"Barn og unge",
+   when:"Første måned",need:"Vaksinasjonskort om tilgjengelig",
+   why:"Noen barn kan mangle vaksiner fra det norske vaksinasjonsprogrammet. Helsestasjonen hjelper med å finne ut hva som mangler.",
+   desc:"Ta med vaksinasjonskortet til helsestasjonen eller skolehelsetjenesten.",
+   call:"",link:""},
+  {type:"smart",title:"Tannhelse for barn",for:"Barn og unge",
+   when:"Første 1–3 måneder",need:"—",
+   why:"Barn og unge under 18 år får gratis tannbehandling i Norge.",
+   desc:"Barn blir som regel kalt inn automatisk av tannklinikken. Hvis barnet har vondt i tennene, ta kontakt tidligere.",
+   call:"",link:"https://www.tonsberg.kommune.no/tannhelse"}
+],[
+  {type:"first",title:"Meld barnet på skolen",for:"Barn 6–16 år",
+   when:"Så snart som mulig",need:"Barnets alder og adresse. Skolepapirer fra hjemlandet hvis dere har det.",
+   why:"Alle barn i Norge mellom 6 og 16 år har rett og plikt til å gå på skolen. Det er gratis.",
+   desc:"Kontakt kommunen eller nærmeste skole for å finne riktig plass. Du kan spørre om de har en klasse spesielt for barn som nylig har kommet til Norge.",
+   call:"Ring skolen og si: «Jeg har et barn i skolealder som nettopp har kommet til Norge. Jeg vil gjerne melde barnet på skolen.»",
+   link:"https://www.tonsberg.kommune.no/skole"},
+  {type:"smart",title:"Søk SFO",for:"Barn på 1.–4. trinn",
+   when:"Sammen med skoleregistreringen",need:"—",
+   why:"SFO er et tilbud om pass av barna før og etter skoletid. Det gjør det enklere for foreldre å jobbe eller gå på norskkurs.",
+   desc:"Du betaler en månedspris. Sjekk om du kan få redusert pris – noen familier betaler lite eller ingenting.",
+   call:"",link:"https://www.tonsberg.kommune.no/sfo"},
+  {type:"first",title:"Søk barnehageplass",for:"Barn 1–5 år",
+   when:"Så snart som mulig",need:"Barnets fødselsdato og adresse",
+   why:"Det er begrenset med plasser. Jo tidligere du søker, jo bedre.",
+   desc:"Søk på nett via kommunens nettsider. Sjekk også om du kan få redusert pris.",
+   call:"",link:"https://www.tonsberg.kommune.no/barnehage"},
+  {type:"smart",title:"Sjekk om dere kan få gratis barnehagetid",for:"Barn 2–5 år – familier med lav inntekt",
+   when:"Etter at barnehageplass er innvilget",need:"Dokumentasjon på inntekt",
+   why:"Familier med lav inntekt kan ha rett til 20 timer gratis barnehagetid per uke.",
+   desc:"Søk på NAV.no eller kontakt kommunen.",
+   call:"",link:"https://www.nav.no"}
+],[
+  {type:"first",title:"Skaff deg innlogging til norske nettsider (MinID eller BankID)",for:"Voksne – etter norsk nummer",
+   when:"Etter registrering hos Skatteetaten",need:"Norsk fødselsnummer eller D-nummer",
+   why:"De fleste norske offentlige nettsider krever innlogging. Du trenger MinID eller BankID for å søke om støtte, velge fastlege og bruke andre tjenester.",
+   desc:"Start med MinID – det er enklest. MinID lager du på minid.no. BankID får du gjennom banken din.",
+   call:"",link:"https://www.minid.no"},
+  {type:"smart",title:"Opprett bankkonto",for:"Alle – etter norsk nummer",
+   when:"Etter registrering hos Skatteetaten",need:"Pass og norsk nummer",
+   why:"Du trenger en norsk bankkonto for å motta lønn, støtte fra NAV og betale regninger.",
+   desc:"De fleste banker i Norge krever norsk fødselsnummer eller D-nummer. Noen banker har egne tilbud for nyankomne.",
+   call:"",link:""},
+  {type:"maybe",title:"Søk om barnetrygd",for:"Familier med barn – ikke automatisk",
+   when:"Innen første måned etter ankomst",need:"Norsk nummer, dokumentasjon på barn og adresse",
+   why:"Barnetrygd er penger du kan få fra NAV for hvert barn under 18 år. Det utbetales ikke automatisk – du må søke.",
+   desc:"Søk på NAV.no under «Familie og omsorg». Du kan også ringe NAV for hjelp.",
+   call:"Ring NAV på 55 55 33 33 og si: «Jeg har barn som nettopp har kommet til Norge. Jeg vil søke om barnetrygd.»",
+   link:"https://www.nav.no/barnetrygd"}
+],[
+  {type:"maybe",title:"Sjekk om familien skal på introduksjonsprogram",for:"Avhenger av oppholdsgrunnlag",
+   when:"Innen 1–2 måneder etter ankomst",need:"Brev fra UDI",
+   why:"Introduksjonsprogrammet er et program der du lærer norsk, samfunnskunnskap og får hjelp til å komme i arbeid eller utdanning. Noen er pliktige til å delta, andre kan søke om å delta.",
+   desc:"Kontakt læringssenteret i Tønsberg for å høre hva som gjelder for din familie.",
+   call:"Ring læringssenteret og si: «Familien min har nettopp kommet til Norge via familiegjenforening. Skal vi på introduksjonsprogram?»",
+   link:"https://www.tonsberg.kommune.no/laringssenteret"},
+  {type:"first",title:"Start norskopplæring",for:"Voksne",
+   when:"Så raskt som mulig",need:"Norsk nummer",
+   why:"Norsk er det viktigste du kan lære for å klare deg i hverdagen, på jobb og i kontakt med offentlige tjenester.",
+   desc:"Læringssenteret i Tønsberg tilbyr norskopplæring. Noen har plikt til å gå på norsk – spør dem hva som gjelder deg.",
+   call:"Ring læringssenteret og si: «Jeg vil gjerne begynne på norsk. Hva er neste steg?»",
+   link:"https://www.tonsberg.kommune.no/laringssenteret"},
+  {type:"smart",title:"Lag en plan for arbeid og utdanning",for:"Voksne",
+   when:"Når de viktigste tingene er ordnet",need:"—",
+   why:"Å komme i jobb eller utdanning er viktig for økonomi, hverdagsliv og integrering.",
+   desc:"NAV og læringssenteret kan hjelpe med å kartlegge utdanning og arbeidserfaring fra hjemlandet, og vise vei videre.",
+   call:"",link:"https://www.nav.no"}
+]],
+en:[[
+  {type:"first",title:"Read the letter from UDI",for:"Everyone",
+   when:"As soon as you receive it",need:"The letter from UDI",
+   why:"The letter says when the family can travel and how long the permit lasts. It may also include deadlines you must meet.",
+   desc:"Write down: when the family can travel, how long the permit is valid, and when you need to apply for renewal.",
+   call:"Tell the family: 'You can travel to Norway from [date]. Bring all the documents listed in the letter.'",
+   link:"https://www.udi.no"},
+  {type:"first",title:"Book an appointment at the police station",for:"Everyone",
+   when:"Before the family travels, if possible",need:"Passport, letter from UDI",
+   why:"The family must go to the police station to get a residence permit card. This card shows they are allowed to live in Norway.",
+   desc:"Book early – there may be a waiting list. Choose the police station nearest to where the family will live.",
+   call:"",link:"https://www.politiet.no/tjenester/pass-og-id/id-for-utlendinger/"},
+  {type:"first",title:"Make sure the family has somewhere to live",for:"Everyone",
+   when:"Before the family arrives",need:"Rental agreement or proof of housing",
+   why:"Without an address it is difficult to register, choose a GP, and apply for school or kindergarten.",
+   desc:"Check the home is big enough for everyone. The address is needed for post, registration, and local services.",
+   call:"",link:""},
+  {type:"first",title:"Collect important documents",for:"Everyone",
+   when:"Before the family packs",need:"Passports, letter from UDI, birth certificates, vaccination records, school papers, prescriptions",
+   why:"Documents can be very difficult to get hold of afterwards.",
+   desc:"Bring originals where possible. Photograph all documents and save the images securely – for example in cloud storage.",
+   call:"",link:""},
+  {type:"smart",title:"Apply for a kindergarten place early",for:"Children aged 1–5",
+   when:"Now – don't wait",need:"Child's date of birth and home address",
+   why:"There are limited places and fixed application deadlines. The earlier you apply, the better the chance.",
+   desc:"Children living in Tønsberg who have a residence permit may be entitled to a place.",
+   call:"",link:"https://www.tonsberg.kommune.no/barnehage"}
+],[
+  {type:"first",title:"Attend the police appointment",for:"Everyone",
+   when:"Week 1 – the appointment you booked",need:"Passport, letter from UDI and all documents listed in the letter",
+   why:"The family needs a residence permit card to use most public services in Norway.",
+   desc:"Everyone in the family must attend in person. Children under 18 must have a parent with them.",
+   call:"",link:""},
+  {type:"first",title:"Register that the family has moved to Norway",for:"Everyone",
+   when:"As soon as possible after arrival",need:"Passport, letter from UDI, home address",
+   why:"Once this is done, the person receives a Norwegian number (national ID or D-number). This number is needed for a GP, bank, school and most public services.",
+   desc:"This is done at the Tax Administration (Skatteetaten). It is free.",
+   call:"",link:"https://www.skatteetaten.no/person/folkeregister/flytte/til-norge/"},
+  {type:"urgent",title:"Tuberculosis test",for:"Some countries – check if this applies to you",
+   when:"Within 4 weeks of arrival",need:"Passport",
+   why:"Some people arriving from countries with high rates of tuberculosis are required by law to take a test.",
+   desc:"Not sure if this applies to your family? Call the health centre and ask.",
+   call:"Call the health centre in Tønsberg and say: 'My family has just arrived in Norway. Do they need a tuberculosis test?' Have their date of birth and country of origin ready.",
+   link:"https://www.fhi.no/nettpub/smittevernveilederen/tbc/"}
+],[
+  {type:"first",title:"Choose a GP",for:"Everyone – after receiving a Norwegian number",
+   when:"After registering at Skatteetaten",need:"Norwegian national ID or D-number",
+   why:"The GP (fastlege) is the doctor you contact when you are ill, need a prescription, or want a referral to a specialist.",
+   desc:"Log in to helsenorge.no to choose a GP. Choose one near where you live.",
+   call:"",link:"https://www.helsenorge.no/velg-fastlege/"},
+  {type:"first",title:"Contact the health centre",for:"Children aged 0–5",
+   when:"First or second week",need:"Child's health documents and vaccination record",
+   why:"The health centre monitors the child's health, development and vaccinations. It is free and strongly recommended.",
+   desc:"Call the health centre in your municipality. They will book an appointment for you.",
+   call:"Call and say: 'I have a young child who has just arrived in Norway. We would like an appointment.'",
+   link:"https://www.tonsberg.kommune.no/helsestasjon"},
+  {type:"maybe",title:"Check whether the child is missing any vaccinations",for:"Children and young people",
+   when:"First month",need:"Vaccination record if available",
+   why:"Some children may be missing vaccinations from the Norwegian childhood vaccination programme. The health centre can help you find out.",
+   desc:"Bring the vaccination record to the health centre or school health service.",
+   call:"",link:""},
+  {type:"smart",title:"Dental care for children",for:"Children and young people",
+   when:"First 1–3 months",need:"—",
+   why:"Children and young people under 18 receive free dental treatment in Norway.",
+   desc:"Children are usually called in automatically. If the child has toothache, contact the dental clinic sooner.",
+   call:"",link:"https://www.tonsberg.kommune.no/tannhelse"}
+],[
+  {type:"first",title:"Enrol the child in school",for:"Children aged 6–16",
+   when:"As soon as possible",need:"Child's age and address. School papers from home country if available.",
+   why:"All children in Norway aged 6–16 have the right and duty to attend school. It is free.",
+   desc:"Contact the municipality or nearest school to find the right place. You can ask if they have a class specifically for children who have recently arrived in Norway.",
+   call:"Call the school and say: 'I have a school-age child who has just arrived in Norway. I would like to enrol them.'",
+   link:"https://www.tonsberg.kommune.no/skole"},
+  {type:"smart",title:"Apply for after-school care (SFO)",for:"Children in years 1–4",
+   when:"At the same time as school registration",need:"—",
+   why:"SFO provides care before and after school. It makes it easier for parents to work or attend Norwegian classes.",
+   desc:"There is a monthly fee. Check whether you qualify for a reduced rate – some families pay very little or nothing.",
+   call:"",link:"https://www.tonsberg.kommune.no/sfo"},
+  {type:"first",title:"Apply for a kindergarten place",for:"Children aged 1–5",
+   when:"As soon as possible",need:"Child's date of birth and address",
+   why:"There are limited places. The earlier you apply, the better.",
+   desc:"Apply online via the municipality's website. Also check whether you qualify for a reduced rate.",
+   call:"",link:"https://www.tonsberg.kommune.no/barnehage"},
+  {type:"smart",title:"Check whether you qualify for free kindergarten hours",for:"Children aged 2–5 – lower-income families",
+   when:"After a kindergarten place has been offered",need:"Proof of income",
+   why:"Families with low income may be entitled to 20 hours of free kindergarten per week.",
+   desc:"Apply at NAV.no or contact the municipality.",
+   call:"",link:"https://www.nav.no"}
+],[
+  {type:"first",title:"Get a login for Norwegian websites (MinID or BankID)",for:"Adults – after receiving a Norwegian number",
+   when:"After registering at Skatteetaten",need:"Norwegian national ID or D-number",
+   why:"Most Norwegian public websites require a login. You need MinID or BankID to apply for support, choose a GP, and use other services.",
+   desc:"Start with MinID – it is the easiest. Create MinID at minid.no. BankID is ordered through your bank.",
+   call:"",link:"https://www.minid.no"},
+  {type:"smart",title:"Open a bank account",for:"Everyone – after receiving a Norwegian number",
+   when:"After registering at Skatteetaten",need:"Passport and Norwegian number",
+   why:"You need a Norwegian bank account to receive wages, support from NAV, and pay bills.",
+   desc:"Most banks in Norway require a Norwegian national ID or D-number. Some banks have special offers for newcomers.",
+   call:"",link:""},
+  {type:"maybe",title:"Apply for child benefit (barnetrygd)",for:"Families with children – not automatic",
+   when:"Within the first month after arrival",need:"Norwegian number, documentation of children and address",
+   why:"Child benefit is money you can receive from NAV for each child under 18. It is not paid automatically – you must apply.",
+   desc:"Apply at NAV.no under 'Family and care'. You can also call NAV for help.",
+   call:"Call NAV on 55 55 33 33 and say: 'I have children who have just arrived in Norway. I would like to apply for child benefit.'",
+   link:"https://www.nav.no/barnetrygd"}
+],[
+  {type:"maybe",title:"Check whether the family should attend an introduction programme",for:"Depends on your permit type",
+   when:"Within 1–2 months of arrival",need:"Letter from UDI",
+   why:"The introduction programme teaches Norwegian, knowledge of Norwegian society, and helps people find work or education. Some are required to attend; others can apply.",
+   desc:"Contact the learning centre in Tønsberg to find out what applies to your family.",
+   call:"Call the learning centre and say: 'My family has just arrived in Norway through family reunification. Should we attend an introduction programme?'",
+   link:"https://www.tonsberg.kommune.no/laringssenteret"},
+  {type:"first",title:"Start learning Norwegian",for:"Adults",
+   when:"As soon as possible",need:"Norwegian number",
+   why:"Norwegian is the most important thing you can learn for everyday life, work, and contact with public services.",
+   desc:"The learning centre in Tønsberg offers Norwegian classes. Some people are required to attend – ask what applies to you.",
+   call:"Call the learning centre and say: 'I would like to start learning Norwegian. What is the next step?'",
+   link:"https://www.tonsberg.kommune.no/laringssenteret"},
+  {type:"smart",title:"Make a plan for work and education",for:"Adults",
+   when:"Once the most important things are sorted",need:"—",
+   why:"Getting into work or education is important for finances, daily life and integration.",
+   desc:"NAV and the learning centre can help map your qualifications and work experience from your home country, and point you in the right direction.",
+   call:"",link:"https://www.nav.no"}
+]],
+ar:[[
+  {type:"first",title:"اقرأ الرسالة من UDI",for:"الجميع",
+   when:"بمجرد استلامها",need:"الرسالة من UDI",
+   why:"الرسالة تحدد متى يمكن للعائلة السفر ومدة الإقامة المسموح بها. قد تحتوي أيضاً على مواعيد نهائية يجب الالتزام بها.",
+   desc:"دوّن: متى يمكن للعائلة السفر، وكم تدوم التصريحة، ومتى يجب تجديدها.",
+   call:"قل للعائلة: «يمكنكم السفر إلى النرويج من تاريخ [التاريخ]. احضروا جميع الوثائق المذكورة في الرسالة.»",
+   link:"https://www.udi.no"},
+  {type:"first",title:"احجز موعداً في مركز الشرطة",for:"الجميع",
+   when:"قبل سفر العائلة إن أمكن",need:"جواز السفر، رسالة UDI",
+   why:"يجب على العائلة الحضور إلى مركز الشرطة للحصول على بطاقة الإقامة التي تثبت حقهم في الإقامة في النرويج.",
+   desc:"احجز مبكراً – قد يكون هناك انتظار. اختر أقرب مركز شرطة للمكان الذي ستسكن فيه العائلة.",
+   call:"",link:"https://www.politiet.no/tjenester/pass-og-id/id-for-utlendinger/"},
+  {type:"first",title:"تأكد من وجود مسكن للعائلة",for:"الجميع",
+   when:"قبل وصول العائلة",need:"عقد إيجار أو وثيقة تثبت السكن",
+   why:"بدون عنوان يصعب التسجيل واختيار الطبيب وتسجيل الأطفال في المدرسة أو الحضانة.",
+   desc:"تأكد أن المسكن يتسع للجميع. العنوان ضروري للبريد والتسجيل والخدمات البلدية.",
+   call:"",link:""},
+  {type:"first",title:"اجمع الوثائق المهمة",for:"الجميع",
+   when:"قبل أن تحزم العائلة حقائبها",need:"جوازات سفر، رسالة UDI، شهادات ميلاد، سجلات تطعيم، أوراق مدرسية، وصفات طبية",
+   why:"الوثائق قد يصعب الحصول عليها لاحقاً.",
+   desc:"احضر الأصول حيثما أمكن. صوّر جميع الوثائق واحفظها بأمان – مثلاً في التخزين السحابي.",
+   call:"",link:""},
+  {type:"smart",title:"تقدم مبكراً للحصول على مكان في الحضانة",for:"الأطفال 1-5 سنوات",
+   when:"الآن – لا تنتظر",need:"تاريخ ميلاد الطفل وعنوان السكن",
+   why:"الأماكن محدودة ومواعيد التقديم ثابتة. كلما تقدمت مبكراً كانت الفرصة أفضل.",
+   desc:"الأطفال الذين يقيمون في تونسبرغ ولديهم تصريح إقامة قد يحق لهم الحصول على مكان.",
+   call:"",link:"https://www.tonsberg.kommune.no/barnehage"}
+],[
+  {type:"first",title:"احضر إلى مركز الشرطة",for:"الجميع",
+   when:"الأسبوع الأول – في الموعد المحجوز",need:"جواز السفر ورسالة UDI وجميع الوثائق المذكورة فيها",
+   why:"تحتاج العائلة إلى بطاقة الإقامة لاستخدام معظم الخدمات العامة في النرويج.",
+   desc:"يجب على الجميع الحضور شخصياً. الأطفال دون 18 سنة يجب أن يكون معهم أحد الوالدين.",
+   call:"",link:""},
+  {type:"first",title:"سجّل انتقال العائلة إلى النرويج",for:"الجميع",
+   when:"في أقرب وقت ممكن بعد الوصول",need:"جواز السفر، رسالة UDI، العنوان",
+   why:"بعد ذلك يحصل الشخص على رقم نرويجي. هذا الرقم ضروري للطبيب والبنك والمدرسة ومعظم الخدمات العامة.",
+   desc:"يتم هذا في مصلحة الضرائب (Skatteetaten). مجاني.",
+   call:"",link:"https://www.skatteetaten.no/person/folkeregister/flytte/til-norge/"},
+  {type:"urgent",title:"فحص السل",for:"بعض الدول – تحقق إذا كان ينطبق عليكم",
+   when:"خلال 4 أسابيع من الوصول",need:"جواز السفر",
+   why:"بعض القادمين من دول بها معدلات عالية من مرض السل مطالبون قانونياً بإجراء الفحص.",
+   desc:"غير متأكد إذا كان هذا ينطبق على عائلتك؟ اتصل بمركز الصحة واسأل.",
+   call:"اتصل بمركز الصحة في تونسبرغ وقل: «وصلت عائلتي للتو إلى النرويج. هل يحتاجون إلى فحص سل؟» اذكر تاريخ الميلاد والبلد القادمين منه.",
+   link:"https://www.fhi.no/nettpub/smittevernveilederen/tbc/"}
+],[
+  {type:"first",title:"اختر طبيباً عاماً (fastlege)",for:"الجميع – بعد الحصول على الرقم النرويجي",
+   when:"بعد التسجيل في مصلحة الضرائب",need:"الرقم النرويجي",
+   why:"الطبيب العام هو الطبيب الذي تتصل به عند المرض أو للحصول على وصفة طبية أو إحالة إلى أخصائي.",
+   desc:"سجّل الدخول على helsenorge.no لاختيار طبيب قريب من منزلك.",
+   call:"",link:"https://www.helsenorge.no/velg-fastlege/"},
+  {type:"first",title:"اتصل بمركز الصحة",for:"الأطفال 0-5 سنوات",
+   when:"الأسبوع الأول أو الثاني",need:"وثائق صحة الطفل وسجل التطعيم",
+   why:"مركز الصحة يتابع صحة الطفل ونموه وتطعيماته. مجاني ويُنصح به بشدة.",
+   desc:"اتصل بمركز الصحة في بلديتك. سيحجزون لك موعداً.",
+   call:"اتصل وقل: «لديّ طفل صغير وصل للتو إلى النرويج. نريد موعداً.»",
+   link:"https://www.tonsberg.kommune.no/helsestasjon"},
+  {type:"maybe",title:"تحقق من تطعيمات الطفل",for:"الأطفال والشباب",
+   when:"الشهر الأول",need:"سجل التطعيم إن وجد",
+   why:"بعض الأطفال قد يفتقدون تطعيمات من البرنامج النرويجي. مركز الصحة يساعد في معرفة ما ينقص.",
+   desc:"أحضر سجل التطعيم إلى مركز الصحة أو خدمة صحة المدرسة.",
+   call:"",link:""},
+  {type:"smart",title:"صحة الأسنان للأطفال",for:"الأطفال والشباب",
+   when:"1-3 أشهر الأولى",need:"—",
+   why:"الأطفال والشباب دون 18 سنة يحصلون على علاج أسنان مجاني في النرويج.",
+   desc:"عادةً يتم استدعاء الأطفال تلقائياً. إذا كان الطفل يعاني من ألم في الأسنان، اتصل مبكراً.",
+   call:"",link:"https://www.tonsberg.kommune.no/tannhelse"}
+],[
+  {type:"first",title:"سجّل الطفل في المدرسة",for:"الأطفال 6-16 سنة",
+   when:"في أقرب وقت ممكن",need:"عمر الطفل وعنوانه. أوراق مدرسية من البلد الأصلي إن وجدت.",
+   why:"جميع الأطفال في النرويج من سن 6 إلى 16 سنة لهم حق وواجب الذهاب إلى المدرسة. مجاني.",
+   desc:"اتصل بالبلدية أو أقرب مدرسة. يمكنك السؤال عن وجود فصل خاص للأطفال القادمين حديثاً إلى النرويج.",
+   call:"اتصل بالمدرسة وقل: «لديّ طفل في سن المدرسة وصل للتو إلى النرويج. أريد تسجيله.»",
+   link:"https://www.tonsberg.kommune.no/skole"},
+  {type:"smart",title:"تقدم لبرنامج الرعاية بعد المدرسة (SFO)",for:"الأطفال في الصفوف 1-4",
+   when:"مع التسجيل في المدرسة",need:"—",
+   why:"SFO هو برنامج رعاية قبل وبعد أوقات الدراسة. يسهّل على الوالدين العمل أو حضور دروس النرويجية.",
+   desc:"هناك رسوم شهرية. تحقق إذا كنت مؤهلاً لتخفيض – بعض العائلات تدفع القليل أو لا شيء.",
+   call:"",link:"https://www.tonsberg.kommune.no/sfo"},
+  {type:"first",title:"تقدم بطلب للحصول على مكان في الحضانة",for:"الأطفال 1-5 سنوات",
+   when:"في أقرب وقت ممكن",need:"تاريخ ميلاد الطفل وعنوانه",
+   why:"الأماكن محدودة. كلما تقدمت مبكراً كان أفضل.",
+   desc:"قدّم الطلب عبر الإنترنت من خلال موقع البلدية. تحقق أيضاً إذا كنت مؤهلاً لتخفيض السعر.",
+   call:"",link:"https://www.tonsberg.kommune.no/barnehage"},
+  {type:"smart",title:"تحقق من ساعات الحضانة المجانية",for:"الأطفال 2-5 سنوات – عائلات ذات دخل منخفض",
+   when:"بعد قبول الطلب",need:"إثبات الدخل",
+   why:"العائلات ذات الدخل المنخفض قد تحق لها 20 ساعة حضانة مجانية في الأسبوع.",
+   desc:"تقدم بطلب على NAV.no أو اتصل بالبلدية.",
+   call:"",link:"https://www.nav.no"}
+],[
+  {type:"first",title:"احصل على حساب دخول للمواقع النرويجية (MinID أو BankID)",for:"البالغون – بعد الحصول على الرقم النرويجي",
+   when:"بعد التسجيل في مصلحة الضرائب",need:"الرقم النرويجي",
+   why:"معظم المواقع الحكومية النرويجية تتطلب تسجيل الدخول. تحتاج إلى MinID أو BankID لتقديم الطلبات والوصول إلى الخدمات.",
+   desc:"ابدأ بـ MinID – هو الأسهل. يمكنك إنشاؤه على minid.no. BankID يتم طلبه من خلال البنك.",
+   call:"",link:"https://www.minid.no"},
+  {type:"smart",title:"افتح حساباً بنكياً",for:"الجميع – بعد الرقم النرويجي",
+   when:"بعد التسجيل في مصلحة الضرائب",need:"جواز السفر والرقم النرويجي",
+   why:"تحتاج إلى حساب بنكي نرويجي لاستلام الراتب والدعم من NAV ودفع الفواتير.",
+   desc:"معظم البنوك تتطلب رقماً نرويجياً. بعض البنوك لديها عروض خاصة للقادمين الجدد.",
+   call:"",link:""},
+  {type:"maybe",title:"تقدم بطلب لإعانة الأطفال (barnetrygd)",for:"العائلات التي لديها أطفال – ليست تلقائية",
+   when:"خلال الشهر الأول من الوصول",need:"الرقم النرويجي، وثائق الأطفال والعنوان",
+   why:"إعانة الأطفال هي مبلغ تحصل عليه من NAV لكل طفل دون 18 سنة. لا تُصرف تلقائياً – يجب التقديم.",
+   desc:"قدّم الطلب على NAV.no ضمن «العائلة والرعاية». يمكنك أيضاً الاتصال بـ NAV للمساعدة.",
+   call:"اتصل بـ NAV على 55 55 33 33 وقل: «لديّ أطفال وصلوا للتو إلى النرويج. أريد التقدم لإعانة الأطفال.»",
+   link:"https://www.nav.no/barnetrygd"}
+],[
+  {type:"maybe",title:"تحقق إذا كانت العائلة ستشارك في برنامج الاندماج",for:"يعتمد على نوع الإقامة",
+   when:"خلال 1-2 شهر من الوصول",need:"رسالة UDI",
+   why:"برنامج الاندماج يعلّم اللغة النرويجية ومعرفة المجتمع ويساعد في إيجاد عمل أو التعليم. بعض الأشخاص ملزمون بالمشاركة وآخرون يمكنهم التقدم.",
+   desc:"اتصل بمركز التعلم في تونسبرغ لمعرفة ما ينطبق على عائلتك.",
+   call:"اتصل بمركز التعلم وقل: «وصلت عائلتي للتو إلى النرويج عبر لمّ الشمل. هل يجب علينا المشاركة في برنامج الاندماج؟»",
+   link:"https://www.tonsberg.kommune.no/laringssenteret"},
+  {type:"first",title:"ابدأ تعلم اللغة النرويجية",for:"البالغون",
+   when:"في أقرب وقت ممكن",need:"الرقم النرويجي",
+   why:"اللغة النرويجية هي أهم شيء يمكنك تعلمه للحياة اليومية والعمل والتعامل مع الخدمات العامة.",
+   desc:"مركز التعلم في تونسبرغ يقدم دروس النرويجية. بعض الأشخاص ملزمون – اسأل ما ينطبق عليك.",
+   call:"اتصل بمركز التعلم وقل: «أريد أن أبدأ تعلم اللغة النرويجية. ما هي الخطوة التالية؟»",
+   link:"https://www.tonsberg.kommune.no/laringssenteret"},
+  {type:"smart",title:"ضع خطة للعمل والتعليم",for:"البالغون",
+   when:"عندما تُرتب الأمور المهمة",need:"—",
+   why:"الحصول على عمل أو التعليم مهم للوضع المالي والحياة اليومية والاندماج.",
+   desc:"NAV ومركز التعلم يمكنهما مساعدتك في تقييم مؤهلاتك وخبرتك المهنية من بلدك الأصلي.",
+   call:"",link:"https://www.nav.no"}
+]]};
+
+let lang='no',phase=0;
+const checked={};
+
+function badgeCls(type){
+  if(type==='first')  return 'tb-badge tb-badge--first';
+  if(type==='urgent') return 'tb-badge tb-badge--urgent';
+  if(type==='maybe')  return 'tb-badge tb-badge--maybe';
+  return 'tb-badge tb-badge--smart';
+}
+function badgeTxt(type,done,t){
+  if(done) return t.badge_done;
+  if(type==='first')  return t.badge_first;
+  if(type==='urgent') return t.badge_urgent;
+  if(type==='maybe')  return t.badge_maybe;
+  return t.badge_smart;
+}
+function rowCls(type,done){
+  const b='check-row--'+type;
+  return `check-row ${b}${done?' check-row--done':''}`;
+}
+
+function buildRow(item,id,t){
+  const done=!!checked[id];
+  const div=document.createElement('div');
+  div.id='row-'+id; div.className=rowCls(item.type,done);
+  const needHtml=item.need&&item.need!=='—'?`<dt>${t.need_lbl}:</dt><dd>${item.need}</dd>`:'';
+  const callHtml=item.call?`<div class="check-call"><strong>${t.call_lbl}</strong>${item.call}</div>`:'';
+  const linkHtml=item.link?`<a href="${item.link}" target="_blank" rel="noopener" class="check-link">${t.open_link} →</a>`:'';
+  const forHtml=item.for?`<span class="check-for">${t.for_lbl}: ${item.for}</span>`:'';
+  div.innerHTML=`<details><summary class="check-summary">
+    <div class="check-cb" id="cb-${id}" onclick="event.stopPropagation();toggleCheck('${id}')">
+      <svg class="check-cb__tick" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="check-meta-wrap">
+      <div class="check-top-line">
+        <span class="check-title" id="title-${id}">${item.title}</span>
+        <span class="${done?'tb-badge tb-badge--done':badgeCls(item.type)}" id="badge-${id}">${badgeTxt(item.type,done,t)}</span>
+      </div>
+      <div class="check-meta">${forHtml}<span>${item.when}</span></div>
+    </div>
+    <span class="check-arrow">▾</span>
+  </summary>
+  <div class="check-details">
+    <dl><dt>${t.why_lbl}:</dt><dd>${item.why}</dd>${needHtml}</dl>
+    <p>${item.desc}</p>
+    ${callHtml}${linkHtml}
+  </div></details>`;
+  return div;
+}
+
+function buildAll(){
+  const d=DATA[lang],t=T[lang];
+  for(let p=0;p<d.length;p++){
+    const c=document.getElementById('list'+p);c.innerHTML='';
+    d[p].forEach((item,i)=>c.appendChild(buildRow(item,`p${p}_i${i}`,t)));
+  }
+  updateCounts();updateProgress();
+}
+
+function toggleCheck(id){
+  checked[id]=!checked[id];
+  const t=T[lang],item=getItem(id);
+  document.getElementById('row-'+id).className=rowCls(item.type,checked[id]);
+  const badge=document.getElementById('badge-'+id);
+  if(badge){badge.textContent=badgeTxt(item.type,checked[id],t);badge.className=checked[id]?'tb-badge tb-badge--done':badgeCls(item.type);}
+  updateCounts();updateProgress();
+}
+
+function getItem(id){const m=id.match(/p(\d+)_i(\d+)/);return DATA[lang][+m[1]][+m[2]];}
+
+function updateCounts(){
+  const d=DATA[lang];
+  for(let p=0;p<d.length;p++){
+    const done=d[p].filter((_,i)=>!!checked[`p${p}_i${i}`]).length;
+    const el=document.getElementById('count'+p);if(el)el.textContent=`${done}/${d[p].length}`;
+  }
+}
+
+function updateProgress(){
+  const d=DATA[lang];let total=0,done=0;
+  for(let p=0;p<d.length;p++){total+=d[p].length;done+=d[p].filter((_,i)=>!!checked[`p${p}_i${i}`]).length;}
+  const pct=total>0?Math.round(done/total*100):0;
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressText').textContent=T[lang].progress_fn(done,total);
+}
+
+function switchPhase(idx){
+  document.querySelectorAll('.phase-section').forEach(s=>s.classList.remove('phase-section--active'));
+  document.querySelectorAll('.phase-tab').forEach(b=>b.classList.remove('phase-tab--active'));
+  document.getElementById('phase-'+idx).classList.add('phase-section--active');
+  document.querySelector(`[data-phase="${idx}"]`).classList.add('phase-tab--active');
+  phase=idx;
+}
+
+function setLang(l){
+  lang=l;
+  document.querySelectorAll('.lang-sw__btn').forEach(b=>{
+    const match=b.textContent.trim().toLowerCase()===l||(l==='ar'&&b.textContent.trim()==='AR');
+    b.classList.toggle('lang-sw__btn--active',b.getAttribute('onclick').includes(`'${l}'`));
+  });
+  const t=T[l];
+  document.querySelectorAll('[data-t]').forEach(el=>{const k=el.getAttribute('data-t');if(typeof t[k]==='string')el.textContent=t[k];});
+  document.documentElement.setAttribute('dir',l==='ar'?'rtl':'ltr');
+  const tabKeys=['phase0_tab','phase1_tab','phase2_tab','phase3_tab','phase4_tab','phase5_tab'];
+  document.querySelectorAll('.phase-tab').forEach((tab,i)=>{const s=tab.querySelector('span[data-t]');if(s)s.textContent=t[tabKeys[i]];});
+  buildAll();
+}
+
+buildAll();
+</script>
+</body>
+</html>
