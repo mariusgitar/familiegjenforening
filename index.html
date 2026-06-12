@@ -187,8 +187,9 @@
   .app-progress-bar-inner { max-width: 720px; margin: 0 auto; }
   .app-progress__bar { height: 5px; background: #dde3d8; border-radius: 100px; overflow: hidden; margin-bottom: 0.375rem; }
   .app-progress__fill { height: 100%; background: var(--tb-navy); border-radius: 100px; transition: width 0.35s ease; }
-  .app-progress__label { font-size: 0.8125rem; color: var(--tb-gray); }
-  .app-progress__label strong { color: var(--tb-navy); }
+  .app-progress__label { font-size: 0.8125rem; color: var(--tb-gray); min-height: 1.2em; }
+  .app-progress__label strong { color: var(--tb-green-dark); }
+  .app-progress__label.hidden { visibility: hidden; }
 
   /* Main */
   .app-main { max-width: 720px; margin: 0 auto; padding: 1rem 1.25rem 4rem; width: 100%; flex: 1; background: var(--tb-bg); }
@@ -290,11 +291,19 @@
   .check-row--urgent { border-left: 3px solid var(--tb-red); }
   .check-row--maybe  { border-left: 3px solid var(--tb-blue-light); }
   .check-row--smart  { border-left: 3px solid var(--tb-green); }
-  .check-row--done { opacity: 0.5; }
+  .check-row--done { opacity: 1; }
+  .check-row--done .check-summary { padding: 0.5rem 0.875rem; cursor: default; }
+  .check-row--done .check-title { opacity: 0.45; text-decoration: line-through; font-weight: 500; }
+  .check-row--done .check-for,
+  .check-row--done .check-meta span:last-child,
+  .check-row--done .check-arrow { display: none; }
+  .check-row--done .check-meta { margin-top: 0; }
+  .check-row--done .check-cb { cursor: pointer; }
+  .check-row--done details[open] > .check-details { display: none; }
   .check-row--done.check-row--first,
   .check-row--done.check-row--urgent,
   .check-row--done.check-row--maybe,
-  .check-row--done.check-row--smart { border-left-color: var(--tb-green-dark); }
+  .check-row--done.check-row--smart { border-left-color: var(--tb-green-dark); border-left-width: 3px; background: #fafffe; }
 
   .check-summary { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.8125rem 0.875rem; cursor: pointer; user-select: none; list-style: none; }
   .check-summary::-webkit-details-marker { display: none; }
@@ -433,7 +442,7 @@
   <div class="app-progress-bar-wrap">
     <div class="app-progress-bar-inner">
       <div class="app-progress__bar"><div class="app-progress__fill" id="progressFill" style="width:0%"></div></div>
-      <p class="app-progress__label"><strong id="progressText">0 av 22 fullført</strong></p>
+      <p class="app-progress__label hidden" id="progressLabel"><strong id="progressText"></strong></p>
     </div>
   </div>
 
@@ -545,7 +554,7 @@ function updateWelcomeTexts(l) {
 
 function startApp() {
   lang = pendingLang;
-  // If family already arrived, start on phase 1 (week 1), otherwise phase 0
+  loadChecked();
   const startPhase = pendingArrived === 'yes' ? 1 : 0;
   document.getElementById('welcomeScreen').classList.add('hidden');
   const appScreen = document.getElementById('appScreen');
@@ -632,7 +641,7 @@ no:{
   footer_text:"Prototype – ikke en offisiell tjeneste ennå · Tønsberg kommune",
   badge_first:"Gjør dette først",badge_urgent:"Viktig – ikke vent",badge_maybe:"Gjelder kanskje dere",badge_smart:"Lurt å gjøre tidlig",badge_done:"Ferdig",
   for_lbl:"Gjelder",why_lbl:"Hvorfor",need_lbl:"Ha klart",call_lbl:"Dette kan du si",open_link:"Gå til nettside",
-  progress_fn:(n,t)=>`${n} av ${t} fullført`
+  progress_fn:(n,t)=>n===t?'Alt fullført ✓':`${n} av ${t} fullført`
 },
 en:{
   app_title:"Help your family get started",
@@ -651,7 +660,7 @@ en:{
   footer_text:"Prototype – not an official service yet · Tønsberg municipality",
   badge_first:"Do this first",badge_urgent:"Important – don't wait",badge_maybe:"May apply to you",badge_smart:"Good to do early",badge_done:"Done",
   for_lbl:"Who",why_lbl:"Why",need_lbl:"Have ready",call_lbl:"What to say",open_link:"Go to website",
-  progress_fn:(n,t)=>`${n} of ${t} completed`
+  progress_fn:(n,t)=>n===t?'All done ✓':`${n} of ${t} completed`
 },
 nl:{
   app_title:"Help je gezin op weg",
@@ -670,7 +679,7 @@ nl:{
   footer_text:"Prototype – nog geen officiële dienst · Gemeente Tønsberg",
   badge_first:"Doe dit eerst",badge_urgent:"Belangrijk – wacht niet",badge_maybe:"Geldt misschien voor jullie",badge_smart:"Goed om vroeg te doen",badge_done:"Klaar",
   for_lbl:"Voor wie",why_lbl:"Waarom",need_lbl:"Neem mee",call_lbl:"Wat je kunt zeggen",open_link:"Ga naar website",
-  progress_fn:(n,t)=>`${n} van ${t} afgerond`
+  progress_fn:(n,t)=>n===t?'Alles klaar ✓':`${n} van ${t} afgerond`
 },
 ar:{
   hero_eyebrow:"بلدية تونسبرغ",
@@ -688,7 +697,7 @@ ar:{
   footer_text:"نموذج أولي – ليس خدمة رسمية بعد · بلدية تونسبرغ",
   badge_first:"افعل هذا أولاً",badge_urgent:"مهم – لا تنتظر",badge_maybe:"قد ينطبق عليكم",badge_smart:"من الجيد الفعل مبكراً",badge_done:"تم",phase0_short:"قبل",phase1_short:"أسبوع 1",phase2_short:"أسابيع 4",phase3_short:"أطفال",phase4_short:"مال",phase5_short:"لغة",nav_prev:"→ السابق",nav_next:"التالي ←",
   for_lbl:"ينطبق على",why_lbl:"لماذا",need_lbl:"احضر معك",call_lbl:"ماذا تقول",open_link:"اذهب إلى الموقع",
-  progress_fn:(n,t)=>`${n} من ${t} مكتمل`
+  progress_fn:(n,t)=>n===t?'تم الإنجاز ✓':`${n} من ${t} مكتمل`
 }};
 
 const DATA={
@@ -1234,6 +1243,11 @@ function buildRow(item,id,t){
     <p>${item.desc}</p>
     ${callHtml}${linkHtml}
   </div></details>`;
+  // Prevent done rows from expanding
+  if(done){
+    const summary=div.querySelector('summary');
+    if(summary) summary.addEventListener('click', e=>{ if(div.classList.contains('check-row--done')) e.preventDefault(); });
+  }
   return div;
 }
 
@@ -1243,19 +1257,46 @@ function buildAll(){
     const c=document.getElementById('list'+p);
     if(!c) continue;
     c.innerHTML='';
-    d[p].forEach((item,i)=>c.appendChild(buildRow(item,`p${p}_i${i}`,t)));
+    d[p].forEach((item,i)=>{
+      const row=buildRow(item,`p${p}_i${i}`,t);
+      c.appendChild(row);
+    });
   }
+  // Block toggling open on done rows
+  document.querySelectorAll('.check-row--done details').forEach(det=>{
+    det.removeAttribute('open');
+  });
   updateTimeline();
   updateProgress();
   updateNavBtns();
 }
 
+function saveChecked(){
+  try{ localStorage.setItem('tb_checked', JSON.stringify(checked)); }catch(e){}
+}
+function loadChecked(){
+  try{
+    const s=localStorage.getItem('tb_checked');
+    if(s){ const d=JSON.parse(s); Object.assign(checked,d); }
+  }catch(e){}
+}
+
 function toggleCheck(id){
   checked[id]=!checked[id];
+  if(!checked[id]) delete checked[id]; // clean up false values
   const t=T[lang],item=getItem(id);
-  document.getElementById('row-'+id).className=rowCls(item.type,checked[id]);
+  const row=document.getElementById('row-'+id);
+  if(row){
+    row.className=rowCls(item.type,checked[id]);
+    // Close and lock done rows
+    if(checked[id]){
+      const det=row.querySelector('details');
+      if(det) det.removeAttribute('open');
+    }
+  }
   const badge=document.getElementById('badge-'+id);
   if(badge){badge.textContent=badgeTxt(item.type,checked[id],t);badge.className=checked[id]?'tb-badge tb-badge--done':badgeCls(item.type);}
+  saveChecked();
   updateTimeline();
   updateProgress();
 }
@@ -1290,7 +1331,15 @@ function updateProgress(){
   const fill=document.getElementById('progressFill');
   if(fill) fill.style.width=pct+'%';
   const label=document.getElementById('progressText');
-  if(label) label.textContent=T[lang].progress_fn(done,total);
+  const labelWrap=document.getElementById('progressLabel');
+  if(labelWrap){
+    if(done===0){
+      labelWrap.classList.add('hidden');
+    } else {
+      labelWrap.classList.remove('hidden');
+      if(label) label.textContent=T[lang].progress_fn(done,total);
+    }
+  }
 }
 
 function updateNavBtns(){
