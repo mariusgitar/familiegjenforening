@@ -17,12 +17,12 @@
     --tb-yellow:     #f1be48;
     --tb-blue-light: #91cef2;
     --tb-gray:       #4a4a49;
-    --tb-bg:         #f5f6f3;
+    --tb-bg:         #F7F5F1;
     --tb-white:      #ffffff;
     --tb-green-pale: #eef4e8;
   }
   * { font-family: 'Barlow', sans-serif; box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--tb-bg); color: var(--tb-navy); min-height: 100vh; }
+  body { background: #F7F5F1; color: var(--tb-navy); min-height: 100vh; }
 
   /* ── WELCOME SCREEN ── */
   .welcome-screen {
@@ -61,7 +61,7 @@
   }
 
   .welcome-body {
-    background: var(--tb-white);
+    background: #F7F5F1; color: var(--tb-navy);
     flex: 1;
     padding: 1.75rem 1.25rem 2.5rem;
     display: flex;
@@ -72,95 +72,48 @@
   }
 
   /* Language picker on welcome */
-  .lang-pick-label {
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: var(--tb-navy);
-    margin-bottom: 0.625rem;
-  }
-  .lang-pick-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
-  }
+  .lang-pick-grid { display: flex; flex-direction: column; gap: 0.5rem; }
   .lang-pick-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    padding: 0.75rem 1rem;
-    border: 1.5px solid #d6ddd0;
-    border-radius: 10px;
-    background: var(--tb-white);
-    cursor: pointer;
-    transition: all 0.12s;
-    font-family: inherit;
-    text-align: left;
+    display: flex; align-items: center; gap: 0.875rem;
+    padding: 0.875rem 1rem; border: none; border-radius: 14px;
+    background: white; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    cursor: pointer; transition: box-shadow 0.12s, background 0.12s;
+    font-family: inherit; text-align: left; width: 100%;
   }
-  .lang-pick-btn:hover { border-color: var(--tb-navy); }
-  .lang-pick-btn.selected {
-    border-color: var(--tb-navy);
-    background: var(--tb-green-pale);
-  }
-  .lang-pick-btn .lang-flag { font-size: 1.25rem; line-height: 1; flex-shrink: 0; }
-  .lang-pick-btn .lang-name { font-size: 0.9375rem; font-weight: 600; color: var(--tb-navy); line-height: 1.1; }
-  .lang-pick-btn .lang-native { font-size: 0.75rem; color: var(--tb-gray); }
+  .lang-pick-btn:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .lang-pick-btn.selected { background: #EEF4EC; box-shadow: 0 0 0 2px #00714e; }
+  .lang-pick-btn .lang-flag { font-size: 1.5rem; line-height: 1; flex-shrink: 0; }
+  .lang-pick-btn .lang-name { font-size: 1rem; font-weight: 600; color: #1C2E3A; line-height: 1.1; }
+  .lang-pick-btn .lang-native { font-size: 0.8125rem; color: #9A9A95; }
+  .lang-pick-btn .lang-check { margin-left: auto; color: #00714e; font-size: 1rem; opacity: 0; transition: opacity 0.12s; }
+  .lang-pick-btn.selected .lang-check { opacity: 1; }
 
   /* Arrived question */
-  .arrived-label {
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: var(--tb-navy);
-    margin-bottom: 0.625rem;
-  }
   .arrived-options { display: flex; flex-direction: column; gap: 0.5rem; }
   .arrived-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.875rem 1rem;
-    border: 1.5px solid #d6ddd0;
-    border-radius: 10px;
-    background: var(--tb-white);
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    color: var(--tb-navy);
-    text-align: left;
-    transition: all 0.12s;
+    display: flex; align-items: center; gap: 0.875rem;
+    padding: 0.875rem 1rem; border: none; border-radius: 14px;
+    background: white; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    cursor: pointer; font-family: inherit; font-size: 1rem;
+    font-weight: 500; color: #1C2E3A; text-align: left;
+    transition: box-shadow 0.12s, background 0.12s; width: 100%;
   }
-  .arrived-btn:hover { border-color: var(--tb-navy); }
-  .arrived-btn.selected { border-color: var(--tb-navy); background: var(--tb-green-pale); font-weight: 600; }
-  .arrived-btn .arrived-icon { font-size: 1.25rem; flex-shrink: 0; }
+  .arrived-btn:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .arrived-btn.selected { background: #EEF4EC; box-shadow: 0 0 0 2px #00714e; font-weight: 600; }
+  .arrived-btn .arrived-icon { font-size: 1.375rem; flex-shrink: 0; }
+  .arrived-btn .arrived-check { margin-left: auto; color: #00714e; font-size: 1rem; opacity: 0; transition: opacity 0.12s; }
+  .arrived-btn.selected .arrived-check { opacity: 1; }
 
   /* Start button */
   .welcome-start-btn {
-    width: 100%;
-    padding: 0.9375rem;
-    background: var(--tb-navy);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: opacity 0.12s;
-    letter-spacing: -0.1px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
+    width: 100%; padding: 1rem; background: var(--tb-navy); color: white;
+    border: none; border-radius: 14px; font-family: inherit; font-size: 1rem;
+    font-weight: 600; cursor: pointer; transition: opacity 0.12s;
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
   }
-  .welcome-start-btn:disabled { opacity: 0.35; cursor: default; }
+  .welcome-start-btn:disabled { opacity: 0.3; cursor: default; }
   .welcome-start-btn:not(:disabled):hover { opacity: 0.88; }
-
-  .welcome-disclaimer {
-    font-size: 0.75rem;
-    color: var(--tb-gray);
-    line-height: 1.5;
-    text-align: center;
-  }
+  .welcome-disclaimer { font-size: 0.8125rem; color: #9A9A95; line-height: 1.55; text-align: center; }
 
   /* ── APP SCREEN ── */
   .app-screen { display: none; flex-direction: column; min-height: 100vh; background: var(--tb-bg); }
@@ -239,41 +192,38 @@
     padding: 0.25rem 0.125rem;
   }
   .phase-tl-dot {
-    width: 30px; height: 30px;
+    width: 28px; height: 28px;
     border-radius: 50%;
-    border: 2px solid #d6ddd0;
+    border: 1.5px solid #E5E3DE;
     background: var(--tb-white);
     display: flex; align-items: center; justify-content: center;
-    font-size: 10px; font-weight: 700; color: var(--tb-gray);
-    transition: all 0.15s;
+    font-size: 10px; font-weight: 600; color: #c8c5c0;
+    transition: all 0.2s;
     flex-shrink: 0;
+    opacity: 0.65;
   }
   .phase-tl-dot svg { pointer-events: none; }
+  .phase-tl-label { font-size: 9.5px; font-weight: 500; color: #a8a5a0; text-align: center; line-height: 1.2; max-width: 52px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .phase-tl-btn.active .phase-tl-dot {
     background: var(--tb-navy);
     border-color: var(--tb-navy);
     color: white;
     width: 32px; height: 32px;
     font-size: 11px;
+    opacity: 1;
   }
+  .phase-tl-btn.active .phase-tl-dot svg { opacity: 1; }
+  .phase-tl-btn.active .phase-tl-label { color: var(--tb-navy); font-weight: 700; font-size: 10px; opacity: 1; }
   .phase-tl-btn.complete .phase-tl-dot {
     background: var(--tb-green-dark);
     border-color: var(--tb-green-dark);
     color: white;
+    opacity: 1;
   }
-  .phase-tl-label {
-    font-size: 9.5px;
-    font-weight: 500;
-    color: var(--tb-gray);
-    text-align: center;
-    line-height: 1.2;
-    max-width: 52px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .phase-tl-btn.active .phase-tl-label { color: var(--tb-navy); font-weight: 700; font-size: 10px; }
-  .phase-tl-btn.complete .phase-tl-label { color: var(--tb-green-dark); }
+  .phase-tl-btn.complete .phase-tl-dot svg { opacity: 1; }
+  .phase-tl-btn.complete .phase-tl-label { color: var(--tb-green-dark); opacity: 1; }
+
+
 
   /* Section heading */
   .section-heading { margin-bottom: 0.875rem; }
@@ -282,22 +232,16 @@
 
   .phase-section { display: none; background: var(--tb-bg); }
   .phase-section--active { display: block; }
-  .checklist { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem; }
+  .checklist { display: flex; flex-direction: column; gap: 0.625rem; margin-top: 0.875rem; }
 
   /* Check row */
-  .check-row { background: var(--tb-white); border: 1px solid #d6ddd0; border-radius: 8px; overflow: hidden; transition: border-color 0.12s; }
-  .check-row:hover { border-color: var(--tb-navy); }
-  .check-row--first  { border-left: 3px solid var(--tb-navy); }
-  .check-row--urgent { border-left: 3px solid var(--tb-red); }
-  .check-row--maybe  { border-left: 3px solid var(--tb-blue-light); }
-  .check-row--smart  { border-left: 3px solid var(--tb-green); }
+  .check-row { background: var(--tb-white); border: none; border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.06); transition: box-shadow 0.15s; }
+  .check-row:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
   .check-row--done { opacity: 1; }
   .check-row--done .check-summary { padding: 0.5rem 0.875rem; cursor: default; }
-  .check-row--done .check-title { opacity: 0.45; text-decoration: line-through; font-weight: 500; }
-  .check-row--done .check-for,
-  .check-row--done .check-meta span:last-child,
+  .check-row--done .check-title { opacity: 0.4; text-decoration: line-through; font-weight: 500; }
+  .check-row--done .check-sub-line { display: none; }
   .check-row--done .check-arrow { display: none; }
-  .check-row--done .check-meta { margin-top: 0; }
   .check-row--done .check-cb { cursor: pointer; }
   .check-row--done details[open] > .check-details { display: none; }
   .check-row--done.check-row--first,
@@ -305,33 +249,35 @@
   .check-row--done.check-row--maybe,
   .check-row--done.check-row--smart { border-left-color: var(--tb-green-dark); border-left-width: 3px; background: #fafffe; }
 
-  .check-summary { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.8125rem 0.875rem; cursor: pointer; user-select: none; list-style: none; }
+  .check-summary { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.75rem 0.875rem; cursor: pointer; user-select: none; list-style: none; }
   .check-summary::-webkit-details-marker { display: none; }
   .check-cb { width: 20px; height: 20px; border-radius: 5px; border: 2px solid #b0c0b8; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: white; transition: all 0.12s; }
   .check-row--done .check-cb { background: var(--tb-navy); border-color: var(--tb-navy); }
   .check-cb__tick { display: none; }
   .check-row--done .check-cb__tick { display: block; }
   .check-meta-wrap { flex: 1; min-width: 0; }
-  .check-top-line { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.25rem; }
-  .check-title { font-size: 0.9rem; font-weight: 600; color: var(--tb-navy); line-height: 1.3; }
-  .check-for { font-size: 11px; color: var(--tb-gray); background: var(--tb-bg); border: 1px solid #d6ddd0; border-radius: 100px; padding: 1px 8px; white-space: nowrap; flex-shrink: 0; }
-  .check-meta { font-size: 0.75rem; color: var(--tb-gray); display: flex; gap: 0.75rem; flex-wrap: wrap; }
-  .tb-badge { font-size: 10px !important; padding: 2px 7px !important; border-radius: 5px !important; font-weight: 600 !important; pointer-events: none; font-family: inherit !important; white-space: nowrap; flex-shrink: 0; }
-  .tb-badge--first  { background: #e8eef2; color: var(--tb-navy); border: 1px solid #b0c8d4; }
-  .tb-badge--urgent { background: #f5e8e8; color: var(--tb-red); border: 1px solid var(--tb-red); }
-  .tb-badge--maybe  { background: #e6f4fb; color: #1d5470; border: 1px solid var(--tb-blue-light); }
-  .tb-badge--smart  { background: var(--tb-green-pale); color: var(--tb-green-dark); border: 1px solid var(--tb-green); }
-  .tb-badge--done   { background: var(--tb-green-pale); color: var(--tb-green-dark); border: 1px solid var(--tb-green-dark); }
+  .check-top-line { display: flex; align-items: flex-start; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.3rem; }
+  .check-sub-line { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.35rem; }
+  .check-when { font-size: 0.78rem; color: #9A9A95; margin-top: 0; }
+  .check-title { font-size: 1rem; font-weight: 600; color: #1C2E3A; line-height: 1.25; letter-spacing: -0.1px; }
+  .check-for { font-size: 11px; color: #7a7875; background: #EDEDEA; border-radius: 20px; padding: 2px 9px; white-space: nowrap; flex-shrink: 0; border: none; }
+  .check-meta { font-size: 0.75rem; color: #9A9A95; display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.1rem; }
+  .tb-badge { font-size: 0.75rem; font-weight: 500; pointer-events: none; font-family: inherit; white-space: nowrap; flex-shrink: 0; background: none; border: none; padding: 0; letter-spacing: 0; }
+  .tb-badge--first  { color: #4A7C6F; }
+  .tb-badge--urgent { color: #923c3d; }
+  .tb-badge--maybe  { color: #4a6e8a; }
+  .tb-badge--smart  { color: #4A7C6F; }
+  .tb-badge--done   { color: #4A7C6F; }
   .check-arrow { color: var(--tb-gray); flex-shrink: 0; font-size: 13px; margin-top: 2px; transition: transform 0.18s; }
   details[open] .check-arrow { transform: rotate(180deg); }
-  .check-details { border-top: 1px solid #e8ede4; padding: 0.875rem 0.875rem 0.875rem 3rem; font-size: 0.8125rem; color: var(--tb-gray); line-height: 1.6; }
+  .check-details { border-top: 1px solid #F0EDE8; padding: 0.875rem 0.875rem 0.875rem 3rem; font-size: 0.8125rem; color: var(--tb-gray); line-height: 1.6; }
   .check-details dl { display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 0.75rem; margin-bottom: 0.625rem; font-size: 0.75rem; }
   .check-details dt { font-weight: 600; white-space: nowrap; color: var(--tb-navy); }
   .check-details dd { color: var(--tb-gray); }
   .check-details p { margin: 0 0 0.5rem 0; }
   .check-details p:last-child { margin: 0; }
   .check-call { background: var(--tb-green-pale); border: 1px solid var(--tb-green); border-radius: 8px; padding: 0.625rem 0.75rem; margin-top: 0.625rem; font-size: 0.75rem; line-height: 1.55; }
-  .check-call strong { display: block; color: var(--tb-green-dark); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem; }
+  .check-call strong { display: block; color: #4A7C6F; font-size: 0.75rem; font-weight: 500; text-transform: none; letter-spacing: 0; margin-bottom: 0.3rem; }
   .check-link { display: inline-flex; align-items: center; gap: 4px; margin-top: 0.5rem; font-size: 0.75rem; font-weight: 600; color: var(--tb-navy); text-decoration: underline; text-underline-offset: 2px; }
   .check-link:hover { color: var(--tb-green-dark); }
   .app-callout { background: var(--tb-green-pale); border: 1px solid var(--tb-green); border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 0.875rem; font-size: 0.875rem; color: var(--tb-navy); line-height: 1.5; }
@@ -367,38 +313,44 @@
   <div class="welcome-body">
     <!-- Language picker -->
     <div>
-      <div class="lang-pick-label" id="wLangLabel">Velg språk / Choose language</div>
+      <div class="welcome-section-label" id="wLangLabel">Velg språk / Choose language</div>
       <div class="lang-pick-grid">
         <button class="lang-pick-btn selected" data-lang="no" onclick="pickLang('no')">
           <span class="lang-flag">🇳🇴</span>
           <span><div class="lang-name">Norsk</div><div class="lang-native">Norsk</div></span>
+          <span class="lang-check">✓</span>
         </button>
         <button class="lang-pick-btn" data-lang="en" onclick="pickLang('en')">
           <span class="lang-flag">🇬🇧</span>
           <span><div class="lang-name">English</div><div class="lang-native">English</div></span>
+          <span class="lang-check">✓</span>
         </button>
         <button class="lang-pick-btn" data-lang="nl" onclick="pickLang('nl')">
           <span class="lang-flag">🇳🇱</span>
           <span><div class="lang-name">Nederlandsk</div><div class="lang-native">Nederlands</div></span>
+          <span class="lang-check">✓</span>
         </button>
         <button class="lang-pick-btn" data-lang="ar" onclick="pickLang('ar')">
           <span class="lang-flag">🇸🇦</span>
           <span><div class="lang-name">Arabisk</div><div class="lang-native">العربية</div></span>
+          <span class="lang-check">✓</span>
         </button>
       </div>
     </div>
 
     <!-- Arrived question -->
     <div>
-      <div class="arrived-label" id="wArrivedLabel">Er familien kommet til Norge?</div>
+      <div class="welcome-section-label" id="wArrivedLabel">Er familien kommet til Norge?</div>
       <div class="arrived-options">
         <button class="arrived-btn" data-arrived="no" onclick="pickArrived('no')">
           <span class="arrived-icon">✈️</span>
           <span id="wArrivedNo">Nei – familien reiser snart</span>
+          <span class="arrived-check">✓</span>
         </button>
         <button class="arrived-btn" data-arrived="yes" onclick="pickArrived('yes')">
           <span class="arrived-icon">🏠</span>
           <span id="wArrivedYes">Ja – familien er i Norge</span>
+          <span class="arrived-check">✓</span>
         </button>
       </div>
     </div>
@@ -659,8 +611,8 @@ no:{
   phase4_title:"Penger og ID på nett",phase4_sub:"De fleste som har jobb eller er i introduksjonsprogrammet trenger ikke søke sosialhjelp. Se hva som gjelder for deg.",
   phase5_title:"Norsk og arbeid",phase5_sub:"Neste steg etter at de praktiske tingene er på plass.",
   footer_text:"Prototype – ikke en offisiell tjeneste ennå · Tønsberg kommune",
-  badge_first:"Gjør dette først",badge_urgent:"Viktig – ikke vent",badge_maybe:"Gjelder kanskje dere",badge_smart:"Lurt å gjøre tidlig",badge_done:"Ferdig",
-  for_lbl:"Gjelder",why_lbl:"Hvorfor",need_lbl:"Ha klart",call_lbl:"Dette kan du si",open_link:"Gå til nettside",
+  badge_first:"↑ Gjør dette først",badge_urgent:"⚑ Viktig – ikke vent",badge_maybe:"◎ Gjelder kanskje dere",badge_smart:"→ Lurt å gjøre tidlig",badge_done:"✓ Ferdig",
+  for_lbl:"Gjelder",why_lbl:"Hvorfor",need_lbl:"Ha klart",call_lbl:"Dette kan du si:",open_link:"Gå til nettside",
   progress_fn:(n,t)=>n===t?'Alt fullført ✓':`${n} av ${t} fullført`
 },
 en:{
@@ -678,8 +630,8 @@ en:{
   phase4_title:"Money and online ID",phase4_sub:"Most people who are working or in the introduction programme don't need to apply for social support. Check what applies to you.",
   phase5_title:"Norwegian and work",phase5_sub:"Next steps once the practical things are in place.",
   footer_text:"Prototype – not an official service yet · Tønsberg municipality",
-  badge_first:"Do this first",badge_urgent:"Important – don't wait",badge_maybe:"May apply to you",badge_smart:"Good to do early",badge_done:"Done",
-  for_lbl:"Who",why_lbl:"Why",need_lbl:"Have ready",call_lbl:"What to say",open_link:"Go to website",
+  badge_first:"↑ Do this first",badge_urgent:"⚑ Important – don't wait",badge_maybe:"◎ May apply to you",badge_smart:"→ Good to do early",badge_done:"✓ Done",
+  for_lbl:"Who",why_lbl:"Why",need_lbl:"Have ready",call_lbl:"What to say:",open_link:"Go to website",
   progress_fn:(n,t)=>n===t?'All done ✓':`${n} of ${t} completed`
 },
 nl:{
@@ -697,8 +649,8 @@ nl:{
   phase4_title:"Geld en online-ID",phase4_sub:"De meeste mensen die werken of het introductieprogramma volgen hoeven geen bijstand aan te vragen. Kijk wat voor jou geldt.",
   phase5_title:"Noors en werk",phase5_sub:"Volgende stappen zodra de praktische zaken geregeld zijn.",
   footer_text:"Prototype – nog geen officiële dienst · Gemeente Tønsberg",
-  badge_first:"Doe dit eerst",badge_urgent:"Belangrijk – wacht niet",badge_maybe:"Geldt misschien voor jullie",badge_smart:"Goed om vroeg te doen",badge_done:"Klaar",
-  for_lbl:"Voor wie",why_lbl:"Waarom",need_lbl:"Neem mee",call_lbl:"Wat je kunt zeggen",open_link:"Ga naar website",
+  badge_first:"↑ Doe dit eerst",badge_urgent:"⚑ Belangrijk – wacht niet",badge_maybe:"◎ Geldt misschien voor jullie",badge_smart:"→ Goed om vroeg te doen",badge_done:"✓ Klaar",
+  for_lbl:"Voor wie",why_lbl:"Waarom",need_lbl:"Neem mee",call_lbl:"Wat je kunt zeggen:",open_link:"Ga naar website",
   progress_fn:(n,t)=>n===t?'Alles klaar ✓':`${n} van ${t} afgerond`
 },
 ar:{
@@ -715,8 +667,8 @@ ar:{
   phase4_title:"المال والهوية الرقمية",phase4_sub:"لاستخدام المواقع الحكومية النرويجية والحصول على الدعم.",
   phase5_title:"اللغة النرويجية والعمل",phase5_sub:"الخطوات التالية بعد ترتيب الأمور العملية.",
   footer_text:"نموذج أولي – ليس خدمة رسمية بعد · بلدية تونسبرغ",
-  badge_first:"افعل هذا أولاً",badge_urgent:"مهم – لا تنتظر",badge_maybe:"قد ينطبق عليكم",badge_smart:"من الجيد الفعل مبكراً",badge_done:"تم",phase0_short:"قبل",phase1_short:"أسبوع 1",phase2_short:"أسابيع 4",phase3_short:"أطفال",phase4_short:"مال",phase5_short:"لغة",nav_prev:"→ السابق",nav_next:"التالي ←",
-  for_lbl:"ينطبق على",why_lbl:"لماذا",need_lbl:"احضر معك",call_lbl:"ماذا تقول",open_link:"اذهب إلى الموقع",
+  badge_first:"↑ افعل هذا أولاً",badge_urgent:"⚑ مهم – لا تنتظر",badge_maybe:"◎ قد ينطبق عليكم",badge_smart:"→ من الجيد الفعل مبكراً",badge_done:"✓ تم",phase0_short:"قبل",phase1_short:"أسبوع 1",phase2_short:"أسابيع 4",phase3_short:"أطفال",phase4_short:"مال",phase5_short:"لغة",nav_prev:"→ السابق",nav_next:"التالي ←",
+  for_lbl:"ينطبق على",why_lbl:"لماذا",need_lbl:"احضر معك",call_lbl:"ماذا تقول:",open_link:"اذهب إلى الموقع",
   progress_fn:(n,t)=>n===t?'تم الإنجاز ✓':`${n} من ${t} مكتمل`
 }};
 
@@ -1244,17 +1196,20 @@ function buildRow(item,id,t){
   const needHtml=item.need&&item.need!=='—'?`<dt>${t.need_lbl}:</dt><dd>${item.need}</dd>`:'';
   const callHtml=item.call?`<div class="check-call"><strong>${t.call_lbl}</strong>${item.call}</div>`:'';
   const linkHtml=item.link?`<a href="${item.link}" target="_blank" rel="noopener" class="check-link">${t.open_link} →</a>`:'';
-  const forHtml=item.for?`<span class="check-for">${t.for_lbl}: ${item.for}</span>`:'';
+  const genericAll=['alle','everyone','iedereen','الجميع'];
+  const showFor = item.for && !genericAll.includes(item.for.toLowerCase().trim());
+  const forHtml = showFor ? `<span class="check-for">${item.for}</span>` : '';
   div.innerHTML=`<details><summary class="check-summary">
     <div class="check-cb" id="cb-${id}" onclick="event.stopPropagation();toggleCheck('${id}')">
       <svg class="check-cb__tick" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
     <div class="check-meta-wrap">
-      <div class="check-top-line">
-        <span class="check-title" id="title-${id}">${item.title}</span>
+      <span class="check-title" id="title-${id}">${item.title}</span>
+      <div class="check-sub-line">
         <span class="${done?'tb-badge tb-badge--done':badgeCls(item.type)}" id="badge-${id}">${badgeTxt(item.type,done,t)}</span>
+        ${forHtml}
+        <span class="check-when">${item.when}</span>
       </div>
-      <div class="check-meta">${forHtml}<span>${item.when}</span></div>
     </div>
     <span class="check-arrow">▾</span>
   </summary>
